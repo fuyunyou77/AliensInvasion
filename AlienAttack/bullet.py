@@ -1,3 +1,11 @@
+###
+ # @Author: fuyunyou
+ # @Date: 2024-10-12 16:21:57
+ # @LastEditors: fuyunyou
+ # @LastEditTime: 2024-10-12 17:35:06
+ # @Description: 
+ # @FilePath: \alien_invasion\AlienAttack\bullet.py
+###
 from typing import Any
 import pygame
 from pygame.sprite import Sprite
@@ -29,4 +37,5 @@ class Bullet(Sprite):
     def draw_bullet(self):
         """在屏幕上绘制子弹"""
         pygame.draw.rect(self.screen,self.color,self.rect)
+        
 
