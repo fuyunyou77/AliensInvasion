@@ -2,7 +2,7 @@
  # @Author: fuyunyou
  # @Date: 2024-10-12 11:17:45
  # @LastEditors: fuyunyou
- # @LastEditTime: 2024-10-12 11:25:09
+ # @LastEditTime: 2024-10-12 17:07:52
  # @Description: 
  # @FilePath: \alien_invasion\AlienAttack\settings.py
 ###
@@ -14,3 +14,11 @@ class Settings:
         self.screen_width=1200
         self.screen_height=800
         self.bg_color=(230,230,230)
+        self.ship_speed=0.5
+
+        #子弹设置
+        self.bullet_speed=1.0
+        self.bullet_width=3
+        self.bullet_height=15
+        self.bullet_color=(60,60,60)
+        self.bullet_allowed=5
