@@ -2,7 +2,7 @@
  # @Author: fuyunyou
  # @Date: 2024-10-12 10:58:40
  # @LastEditors: fuyunyou
- # @LastEditTime: 2024-10-12 17:22:00
+ # @LastEditTime: 2024-10-12 17:35:57
  # @Description: 
  # @FilePath: \alien_invasion\AlienAttack\alien_invasion.py
 ###
@@ -100,3 +100,4 @@ class AliensInvasion:
 if __name__=='__main__':
     ai=AliensInvasion()
     ai.run_game()
+    
