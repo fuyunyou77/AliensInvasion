@@ -2,15 +2,17 @@
  # @Author: fuyunyou
  # @Date: 2024-10-12 10:58:40
  # @LastEditors: fuyunyou
- # @LastEditTime: 2024-10-12 17:35:57
+ # @LastEditTime: 2024-10-13 23:10:18
  # @Description: 
- # @FilePath: \alien_invasion\AlienAttack\alien_invasion.py
+ # @FilePath: \ai_game_project\AlienAttack\alien_invasion.py
 ###
 import sys
 import pygame
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
+
 class AliensInvasion:
     """管理游戏行为和资源的类"""
 
@@ -28,6 +30,9 @@ class AliensInvasion:
        #创建一个飞船
        self.ship=Ship(self)
        self.bullets=pygame.sprite.Group()
+       self.aliens=pygame.sprite.Group()
+
+       self._create_fleet()
 
     def run_game(self):
         """开始游戏的主循环"""
@@ -87,6 +92,12 @@ class AliensInvasion:
             if bullet.rect.bottom<=0:
                 self.bullets.remove(bullet)
 
+    def _create_fleet(self):
+        """创建外星人群"""
+        #创建一个外星人
+        alien=Alien(self)
+        self.aliens.add(alien)
+
     def _upgrade_screen(self):
         """每次循环结束后都重绘屏幕,控制屏幕颜色"""
         self.screen.fill(self.settings.bg_color)
@@ -94,6 +105,8 @@ class AliensInvasion:
         
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.aliens.draw(self.screen)
+        
         #让最近绘制的屏幕可见
         pygame.display.flip()
 
