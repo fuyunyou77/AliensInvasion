@@ -2,9 +2,9 @@
  # @Author: fuyunyou
  # @Date: 2024-10-12 10:58:40
  # @LastEditors: fuyunyou
- # @LastEditTime: 2024-10-13 23:10:18
+ # @LastEditTime: 2024-10-16 18:01:51
  # @Description: 
- # @FilePath: \ai_game_project\AlienAttack\alien_invasion.py
+ # @FilePath: \PythonCode\alien_invasion\AlienAttack\alien_invasion.py
 ###
 import sys
 import pygame
@@ -39,8 +39,9 @@ class AliensInvasion:
         while True:
             self._check_events()
             self.ship.update()
-            self._upgrade_bullets()
-            self._upgrade_screen()
+            self._update_bullets()
+            self._update_alien()
+            self._update_screen()
             
     def _check_events(self):
         """响应按键和鼠标事件"""
@@ -82,7 +83,7 @@ class AliensInvasion:
             new_bullet=Bullet(self)
             self.bullets.add(new_bullet)
 
-    def _upgrade_bullets(self):
+    def _update_bullets(self):
         """更新子弹的位置,并消失的的子弹"""
         #更新子弹位置
         self.bullets.update()
@@ -92,17 +93,61 @@ class AliensInvasion:
             if bullet.rect.bottom<=0:
                 self.bullets.remove(bullet)
 
-    def _create_fleet(self):
-        """创建外星人群"""
-        #创建一个外星人
+    def _create_aliens(self,alien_number,row_number):
+        """创建一个外星人并将其放在当前行"""
         alien=Alien(self)
+        alien_width,alien_height=alien.rect.size
+
+        alien.x=alien_width+2*alien_width*alien_number
+        alien.rect.x=alien.x
+
+        alien.rect.y=alien.rect.height+2*alien.rect.height*row_number
         self.aliens.add(alien)
 
-    def _upgrade_screen(self):
+    def _check_fleet_edges(self):
+        """有外星人到达边缘时采取相应的措施"""
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
+
+    def _change_fleet_direction(self):
+        """将整群外星人向下移,并改变他们的方向"""
+        for alien in self.aliens.sprites():
+            alien.rect.y+=self.settings.fleet_drop_speed
+            self.settings.fleet_direction*=-1
+
+    def _create_fleet(self):
+        """创建外星人群"""
+        #创建一个外星人,并计算一行可以容纳多少人
+        alien=Alien(self)
+        alien_width,alien_height=alien.rect.size
+        #计算一行能容纳多少外星人(需要留出屏幕左右边框边距和外星人之间的间隙)
+        available_space_x=self.settings.screen_width-(2*alien_width)
+        number_aliens_x=available_space_x//(2*alien_width)
+
+        #计算能容纳几列外星人(同样留出间隙和上下边距)
+        ship_height=self.ship.rect.height
+        available_space_y=(self.settings.screen_height-(3*alien_height)-ship_height)
+        number_rows=available_space_y//(2*ship_height)
+
+        #创建外星人群
+        for row in range(number_rows):
+            for alien_number in range(number_aliens_x):
+                self._create_aliens(alien_number,row)
+
+
+
+    def _update_alien(self):
+        """更新外星人群中所有外星人的位置"""
+        self.aliens.update()
+
+
+    def _update_screen(self):
         """每次循环结束后都重绘屏幕,控制屏幕颜色"""
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()#绘制飞船，先画背景再画飞船，确保飞船显示再背景之上
-        
+
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
