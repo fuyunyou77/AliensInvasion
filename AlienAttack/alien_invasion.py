@@ -2,7 +2,7 @@
  # @Author: fuyunyou
  # @Date: 2024-10-12 10:58:40
  # @LastEditors: fuyunyou
- # @LastEditTime: 2024-10-16 18:02:18
+ # @LastEditTime: 2024-10-16 18:06:31
  # @Description: 
  # @FilePath: \PythonCode\alien_invasion\AlienAttack\alien_invasion.py
 ###
@@ -139,7 +139,11 @@ class AliensInvasion:
 
 
     def _update_alien(self):
-        """更新外星人群中所有外星人的位置"""
+        """
+        检查是否有外星人位于屏幕边缘,
+        更新外星人群中所有外星人的位置
+        """
+        self._check_fleet_edges()
         self.aliens.update()
 
 
