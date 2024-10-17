@@ -2,9 +2,9 @@
  # @Author: fuyunyou
  # @Date: 2024-10-12 11:51:14
  # @LastEditors: fuyunyou
- # @LastEditTime: 2024-10-12 15:21:22
+ # @LastEditTime: 2024-10-17 11:45:36
  # @Description: 
- # @FilePath: \alien_invasion\AlienAttack\ship.py
+ # @FilePath: \PythonCode\alien_invasion\AlienAttack\ship.py
 ###
 import pygame
 
@@ -45,3 +45,8 @@ class Ship:
     def blitme(self):
         """在指定位置绘制飞船"""
         self.screen.blit(self.image,self.rect)
+
+    def center_ship(self):
+        """让飞船在屏幕底部居中"""
+        self.rect.midbottom=self.screeen_rect.midbottom
+        self.x=float(self.rect.x)
